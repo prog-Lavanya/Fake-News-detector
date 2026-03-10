@@ -1,281 +1,331 @@
-Fake News Detection using Machine Learning
-Project Overview
+# Fake News Detection using Machine Learning
 
-This project builds a machine learning model that can classify news articles as Fake or Real.
-The dataset contains two CSV files: one with fake news and the other with real news articles. Most of the articles are related to US political news.
+# Project Overview
+This project builds a machine learning model that can classify news articles as **Fake** or **Real**.
 
-The goal of this project is to understand the complete machine learning workflow, starting from data preparation to model evaluation and analysis.
+The dataset contains two CSV files: one with fake news and the other with real news articles. Most of the articles are related to **US political news**.
 
-Basic Machine Learning Concepts
-Overfitting
+The goal of this project is to understand the **complete machine learning workflow**, starting from data preparation to model evaluation and analysis.
 
-Overfitting happens when the model memorizes the training data instead of learning general patterns.
+---
 
-Characteristics:
+# Basic Machine Learning Concepts
 
-The model becomes too complex
+## 1. Overfitting
+Overfitting happens when the model **memorizes the training data instead of learning general patterns**.
 
-Very high accuracy on training data
-
-Poor performance on unseen data
+### Characteristics
+- The model becomes too complex
+- Very high accuracy on training data
+- Poor performance on unseen data
 
 Example pattern:
 
+```
 High training accuracy
 Low testing accuracy
+```
 
-This means the model cannot generalize well to new data.
+This means the model **cannot generalize well to new data**.
 
-Underfitting
+---
 
-Underfitting occurs when the model is too simple to capture the patterns in the dataset.
+## 2. Underfitting
+Underfitting occurs when the model is **too simple to capture the patterns in the dataset**.
 
-Characteristics:
-
-Model fails to learn relationships in the data
-
-Accuracy is low
+### Characteristics
+- The model fails to learn relationships in the data
+- Accuracy is low
 
 Example pattern:
 
+```
 Low training accuracy
 Low testing accuracy
+```
 
-This means the model is not learning enough from the data.
+This means the model is **not learning enough from the data**.
 
-Dataset Used
+---
+
+# Dataset Used
 
 Two CSV files are used in this project:
 
-Fake.csv
-
-True.csv
+- Fake.csv
+- True.csv
 
 Both datasets contain news articles with:
 
-Title
+- Title
+- News content
 
-News content
+During preprocessing, both datasets are merged and a **label column** is created:
 
-During preprocessing, both datasets are merged and a label column is created:
-
+```
 Fake News → 0
 Real News → 1
+```
 
-Purpose of Train/Test Split
+---
+
+# Purpose of Train/Test Split
 
 The dataset is divided into two parts:
 
-Training Data
-
+### Training Data
 Used to teach the model patterns in the data.
 
-Testing Data
-
-Used to evaluate how well the model performs on new unseen data.
+### Testing Data
+Used to evaluate how well the model performs on **new unseen data**.
 
 Simple analogy:
 
+```
 Training → Practice
 Testing → Final Exam
+```
 
-Why Text Cannot Be Used Directly
+---
 
-Machine learning models cannot understand raw text.
-They only work with numerical values.
+# Why Text Cannot Be Used Directly
 
-Therefore, text must first be converted into numbers using a process called text vectorization.
+Machine learning models **cannot understand raw text**.  
+They only work with **numerical values**.
 
-NLP Preprocessing Pipeline
+Therefore, text must first be converted into numbers using a process called **text vectorization**.
+
+---
+
+# NLP Preprocessing Pipeline
 
 Before training the model, text data goes through several preprocessing steps:
 
+```
 Raw Text
-↓
+   ↓
 Cleaning
-↓
+   ↓
 Tokenization
-↓
+   ↓
 Remove Stopwords
-↓
+   ↓
 Vectorization (TF-IDF)
-↓
+   ↓
 Machine Learning Model
+```
 
-Tokenization
+---
 
-Tokenization means splitting text into individual words.
+# Tokenization
+Tokenization means **splitting text into individual words**.
 
 Example:
 
+```
 "Machine learning is powerful"
+```
 
 becomes
 
+```
 ["machine", "learning", "is", "powerful"]
+```
 
-TF-IDF Vectorization
+---
 
-TF-IDF converts text into numerical features.
+# TF-IDF Vectorization
 
-It gives higher importance to important words and lower importance to very common words.
+- TF-IDF converts text into **numerical features**.
+- It gives higher importance to **important words** and lower importance to very common words.
 
-This allows machine learning models to process textual data effectively.
+This allows machine learning models to **process textual data effectively**.
 
-Models Used
+---
 
-Two classification models were trained and compared.
+# Models Used
 
-Logistic Regression
+Two classification models were trained and compared:
 
-Logistic Regression is a classification algorithm.
+1. Logistic Regression
+2. Naive Bayes
+
+---
+
+# Logistic Regression
+
+Logistic Regression is a **classification algorithm**.
 
 It predicts probabilities and then assigns a class.
 
 Example process:
 
+```
 Input text → Probability calculation → Fake or Real
+```
 
 If:
 
+```
 P(Fake) > 0.5
+```
 
-then the model predicts Fake News.
+then the model predicts **Fake News**.
 
-Otherwise it predicts Real News.
+Otherwise it predicts **Real News**.
 
-Logistic Regression uses the sigmoid function:
+Logistic Regression uses the **sigmoid function**:
 
+```
 P = 1 / (1 + e^(-z))
+```
 
-Naive Bayes
+---
 
-Naive Bayes assumes that all words are independent of each other.
+# Naive Bayes
+
+Naive Bayes assumes that **all words are independent of each other**.
 
 Because of this assumption, it sometimes produces slightly lower accuracy.
 
 However, it has several advantages:
 
-Very fast
+- Very fast
+- Works well on small datasets
+- Uses low memory
 
-Works well on small datasets
+---
 
-Uses low memory
+# Why Accuracy Alone Is Not Enough
 
-Why Accuracy Alone Is Not Enough
+Accuracy only tells us **how many predictions were correct overall**, but it does not explain:
 
-Accuracy only tells us how many predictions were correct overall, but it does not explain:
-
-Which class was misclassified
-
-Whether the model is biased
-
-How many important cases were missed
+- Which class was misclassified
+- Whether the model is biased
+- How many important cases were missed
 
 Therefore, additional evaluation metrics are used.
 
-Confusion Matrix
+---
 
-A confusion matrix compares actual values with predicted values.
+# Confusion Matrix
 
-Actual Fake → Predicted Fake → True Positive
-Actual Fake → Predicted Real → False Negative
+A confusion matrix compares **actual values with predicted values**.
 
-Actual Real → Predicted Fake → False Positive
-Actual Real → Predicted Real → True Negative
+|                | Predicted Fake | Predicted Real |
+|---------------|---------------|---------------|
+| Actual Fake   | True Positive | False Negative |
+| Actual Real   | False Positive | True Negative |
 
-This helps us understand where the model is making mistakes.
+This helps us understand **where the model is making mistakes**.
 
-Precision
+---
 
-Precision measures the quality of positive predictions.
+# Precision
+
+Precision measures the **quality of positive predictions**.
 
 Formula:
 
+```
 Precision = True Positives / (True Positives + False Positives)
+```
 
 Meaning:
 
-Out of all items predicted as positive, how many were actually correct.
+Out of all items predicted as positive, **how many were actually correct**.
 
-Recall
+---
 
-Recall measures how many actual positive cases the model successfully detected.
+# Recall
+
+Recall measures **how many actual positive cases the model successfully detected**.
 
 Formula:
 
+```
 Recall = True Positives / (True Positives + False Negatives)
+```
 
 Recall is also known as:
 
-Sensitivity
+- Sensitivity
+- True Positive Rate
 
-True Positive Rate
+It focuses on **not missing important cases**.
 
-It focuses on not missing important cases.
+---
 
-Precision–Recall Tradeoff
+# Precision–Recall Tradeoff
 
 Changing the classification threshold affects precision and recall.
 
+```
 Lower threshold → Higher Recall → Lower Precision
-
 Higher threshold → Lower Recall → Higher Precision
+```
 
-Example: Why Accuracy Is Not Enough in Medical Diagnosis
+---
 
-Suppose a model has 95% accuracy.
-
-Even with this accuracy, the model may still be dangerous in medical diagnosis.
-
-If the model incorrectly predicts malignant cancer as benign (false negative), the patient might not receive treatment in time.
-
-Therefore, in medical applications:
-
-High Recall is more important than overall Accuracy
-
-because missing a serious condition can have severe consequences.
-
-Model Training Process
+# Model Training Process
 
 The training pipeline used in this project:
 
+```
 Dataset
-↓
+   ↓
 Text Cleaning
-↓
+   ↓
 TF-IDF Vectorization
-↓
+   ↓
 Train/Test Split
-↓
+   ↓
 Model Training
-↓
+   ↓
 Evaluation
+```
 
-During training, the model learns weights for different words and patterns in the dataset.
+During training, the model learns **weights for different words and patterns** in the dataset.
+
 These learned patterns help the model classify future news articles.
 
-Model Performance
+---
+
+# Model Performance
 
 Two models were trained and compared:
 
-Logistic Regression
-Naive Bayes
+```
+Logistic Regression Accuracy: 0.9860801781737194
+Naive Bayes Accuracy: 0.9338530066815145
+```
 
-Logistic Regression performed better.
+Logistic Regression performed better and was selected as the final model.
 
-Final performance:
+---
 
-Accuracy ≈ 98.6%
+# Project Structure
 
-Evaluation metrics used:
+```
+fake-news-detector
+│
+├── Fake.csv
+├── True.csv
+├── main.py
+├── fake_news_model.pkl
+├── vectorizer.pkl
+└── README.md
+```
 
-Accuracy
+---
 
-Precision
+# Key Learnings
 
-Recall
+Through this project the following concepts were understood:
 
-F1 Score
-
-Confusion Matrix
+- Complete machine learning workflow
+- Text preprocessing for NLP tasks
+- TF-IDF feature extraction
+- Training and comparing classification models
+- Evaluating models using multiple metrics
+- Understanding model behavior using confusion matrix and error analysis
